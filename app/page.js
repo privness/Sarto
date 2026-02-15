@@ -12,6 +12,7 @@ export default function Home() {
   const [premiumOpen, setPremiumOpen] = useState(false);
   const searchRef = useRef(null);
   const resultsRef = useRef(null);
+  const langRef = useRef(null);
 
   useEffect(() => { setLang(detectLanguage()); }, []);
   useEffect(() => {
@@ -20,9 +21,13 @@ export default function Home() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
   useEffect(() => {
-    const close = () => setLangOpen(false);
-    document.addEventListener('click', close);
-    return () => document.removeEventListener('click', close);
+    function handleClickOutside(e) {
+      if (langRef.current && !langRef.current.contains(e.target)) {
+        setLangOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const i = (key) => t(lang, key);
@@ -163,7 +168,7 @@ export default function Home() {
             <a href="#" onClick={e=>{e.preventDefault();setPremiumOpen(true)}} style={{color:'var(--accent)',fontWeight:600}}>{i('nav_premium')} ✦</a>
             <a href="#" className="ncta" onClick={e=>{e.preventDefault();searchRef.current?.focus()}}>{i('nav_cta')}</a>
           </div>
-          <div className={`ls${langOpen?' o':''}`} onClick={e=>e.stopPropagation()}>
+          <div ref={langRef} className={`ls${langOpen?' o':''}`}>
             <button className="lb" onClick={()=>setLangOpen(!langOpen)}>
               <span className="f">{langObj.flag}</span>
               <span className="ll">{langObj.native}</span>
