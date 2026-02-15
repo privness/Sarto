@@ -4,6 +4,9 @@ export const metadata = {
   title: 'Sarto — Find the exact piece you\'re looking for',
   description: 'AI-powered fashion search engine. Describe what you want and find it across 200+ stores worldwide. Compare prices, materials, and styles in one search.',
   keywords: 'fashion search, clothing finder, price comparison, AI fashion, style finder, wardrobe, shopping',
+  icons: {
+    icon: '/icon.svg',
+  },
   openGraph: {
     title: 'Sarto — Your Personal Fashion Scout',
     description: 'Find any garment across every store. AI-powered fashion search.',
