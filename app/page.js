@@ -116,6 +116,7 @@ export default function Home() {
     .rc{font-size:0.88rem;color:var(--sand-500)}.rsort{font-family:var(--sans);font-size:0.85rem;color:var(--sand-700);background:var(--white);border:1px solid var(--border);padding:8px 16px;border-radius:100px;cursor:pointer}
     .pg{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
     .pc{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;transition:all var(--tr);cursor:pointer;text-decoration:none;color:inherit}
+    .pimg{width:100%;height:100%;object-fit:contain;object-position:center}
     .pc:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(45,37,32,0.16);border-color:var(--accent-light)}
     .pi{width:100%;aspect-ratio:3/4;background:var(--sand-200);position:relative;display:flex;align-items:center;justify-content:center;color:var(--sand-400)}
     .ps{position:absolute;top:12px;left:12px;background:rgba(255,253,249,0.92);backdrop-filter:blur(8px);padding:5px 12px;border-radius:100px;font-size:0.72rem;font-weight:600;letter-spacing:0.06em;color:var(--sand-700);text-transform:uppercase}
@@ -236,17 +237,21 @@ export default function Home() {
                 </div>
                 <div className="pg">
                   {results.products.map(p=>(
-                    <a key={p.id} className="pc" href={p.storeUrl} target="_blank" rel="noopener noreferrer">
+                    <a key={p.id} className="pc" href={p.affiliateUrl || p.storeUrl} target="_blank" rel="noopener noreferrer">
                       <div className="pi">
-                        <svg width="48" height="48" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.3"><path d="M20 12h24l4 8-6 4v28H22V24l-6-4 4-8z"/></svg>
+                        {p.image ? (
+                          <img src={p.image} alt={p.name} className="pimg" loading="lazy" />
+                        ) : (
+                          <svg width="48" height="48" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.3"><path d="M20 12h24l4 8-6 4v28H22V24l-6-4 4-8z"/></svg>
+                        )}
                         <span className="ps">{p.store}</span>
                       </div>
                       <div className="pinfo">
                         <div className="pbrand">{p.brand}</div>
                         <div className="pname">{p.name}</div>
                         <div className="pmeta">
-                          <div className="pprice">{p.currency}{p.price}{p.originalPrice && <span className="orig">{p.currency}{p.originalPrice}</span>}</div>
-                          <div className="pcolors">{p.colors?.map((c,ci)=><div key={ci} className="cdot" style={{background:c}}/>)}</div>
+                          <div className="pprice">{p.currency}{p.price.toFixed(2)}{p.originalPrice && <span className="orig">{p.currency}{p.originalPrice.toFixed(2)}</span>}</div>
+                          {p.colors && <div className="pcolors">{p.colors.map((c,ci)=><div key={ci} className="cdot" style={{background:c}}/>)}</div>}
                         </div>
                       </div>
                     </a>
