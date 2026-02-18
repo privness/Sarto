@@ -60,7 +60,8 @@ export default function Home() {
       });
       const data = await res.json();
       if (data.url) window.location.href = data.url;
-      else if (data.demo) { setPremiumOpen(false); alert('Stripe not configured yet. See .env.example'); }
+      else if (data.demo) { setPremiumOpen(false); }
+      else { console.error('Checkout error:', data.error); }
     } catch (e) { console.error(e); }
   }
 
@@ -161,13 +162,13 @@ export default function Home() {
 
       {/* NAV */}
       <nav className={`nav${scrolled?' s':''}`}>
-        <a href="#" className="logo">SART<b>O</b></a>
+        <a href="#" className="logo" onClick={e=>{e.preventDefault();window.scrollTo({top:0,behavior:'smooth'})}}>SART<b>O</b></a>
         <div className="nr">
           <div className="nl">
             <a href="#how">{i('nav_how')}</a>
             <a href="#features">{i('nav_features')}</a>
             <a href="#" onClick={e=>{e.preventDefault();setPremiumOpen(true)}} style={{color:'var(--accent)',fontWeight:600}}>{i('nav_premium')} ✦</a>
-            <a href="#" className="ncta" onClick={e=>{e.preventDefault();searchRef.current?.focus()}}>{i('nav_cta')}</a>
+            <a href="#" className="ncta" onClick={e=>{e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});setTimeout(()=>searchRef.current?.focus(),500)}}>{i('nav_cta')}</a>
           </div>
           <div ref={langRef} className={`ls${langOpen?' o':''}`}>
             <button className="lb" onClick={()=>setLangOpen(!langOpen)}>
