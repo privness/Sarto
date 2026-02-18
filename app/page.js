@@ -115,17 +115,24 @@ export default function Home() {
     .ri{max-width:1200px;margin:0 auto}
     .rh{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
     .rc{font-size:0.88rem;color:var(--sand-500)}.rsort{font-family:var(--sans);font-size:0.85rem;color:var(--sand-700);background:var(--white);border:1px solid var(--border);padding:8px 16px;border-radius:100px;cursor:pointer}
-    .pg{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-    .pc{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;transition:all var(--tr);cursor:pointer;text-decoration:none;color:inherit}
-    .pimg{width:100%;height:100%;object-fit:contain;object-position:center}
-    .pc:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(45,37,32,0.16);border-color:var(--accent-light)}
-    .pi{width:100%;aspect-ratio:3/4;background:var(--sand-200);position:relative;display:flex;align-items:center;justify-content:center;color:var(--sand-400)}
-    .ps{position:absolute;top:12px;left:12px;background:rgba(255,253,249,0.92);backdrop-filter:blur(8px);padding:5px 12px;border-radius:100px;font-size:0.72rem;font-weight:600;letter-spacing:0.06em;color:var(--sand-700);text-transform:uppercase}
-    .pinfo{padding:18px}.pbrand{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--sand-500);margin-bottom:4px}
-    .pname{font-family:var(--serif);font-size:1.05rem;font-weight:500;margin-bottom:8px;line-height:1.3}
-    .pmeta{display:flex;justify-content:space-between;align-items:center}.pprice{font-size:1.05rem;font-weight:600}
-    .pprice .orig{font-size:0.85rem;font-weight:400;color:var(--sand-500);text-decoration:line-through;margin-left:6px}
-    .pcolors{display:flex;gap:4px}.cdot{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--border)}
+    .pg{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+    .pc{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);cursor:pointer;text-decoration:none;color:inherit;position:relative}
+    .pc:hover{transform:translateY(-8px);box-shadow:0 24px 64px rgba(45,37,32,0.18);border-color:var(--accent-light)}
+    .pc:hover .pvisit{opacity:1;transform:translateY(0)}
+    .pc:hover .pi img{transform:scale(1.05)}
+    .pi{width:100%;aspect-ratio:3/4;background:linear-gradient(180deg,var(--sand-100) 0%,var(--sand-200) 100%);position:relative;display:flex;align-items:center;justify-content:center;color:var(--sand-400);overflow:hidden}
+    .pimg{width:100%;height:100%;object-fit:contain;object-position:center;transition:transform 0.5s cubic-bezier(0.4,0,0.2,1)}
+    .ps{position:absolute;top:12px;left:12px;background:rgba(255,253,249,0.95);backdrop-filter:blur(12px);padding:5px 12px;border-radius:100px;font-size:0.7rem;font-weight:600;letter-spacing:0.08em;color:var(--sand-700);text-transform:uppercase;z-index:2}
+    .pdiscount{position:absolute;top:12px;right:12px;background:linear-gradient(135deg,#8b6914,#c4a24e);padding:5px 10px;border-radius:100px;font-size:0.7rem;font-weight:700;color:white;letter-spacing:0.03em;z-index:2}
+    .pvisit{position:absolute;bottom:12px;left:12px;right:12px;background:rgba(45,37,32,0.9);backdrop-filter:blur(12px);padding:10px;border-radius:10px;text-align:center;font-size:0.78rem;font-weight:500;color:var(--white);letter-spacing:0.04em;opacity:0;transform:translateY(8px);transition:all 0.3s cubic-bezier(0.4,0,0.2,1);z-index:2;display:flex;align-items:center;justify-content:center;gap:6px}
+    .pinfo{padding:16px 18px 18px}
+    .pbrand{font-size:0.68rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--sand-400);margin-bottom:6px}
+    .pname{font-family:var(--serif);font-size:1rem;font-weight:500;margin-bottom:10px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.7em}
+    .pmeta{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid var(--sand-100)}
+    .pprice{font-size:1.1rem;font-weight:700;color:var(--sand-900)}
+    .pprice .orig{font-size:0.82rem;font-weight:400;color:var(--sand-400);text-decoration:line-through;margin-left:6px}
+    .pprice .save{font-size:0.72rem;font-weight:600;color:#8b6914;display:block;margin-top:2px}
+    .pcolors{display:flex;gap:4px}.cdot{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--border)}
     .aff{margin-top:32px;padding:16px 24px;background:var(--white);border:1px solid var(--border);border-radius:var(--r);font-size:0.82rem;color:var(--sand-500);display:flex;align-items:center;gap:10px}
     .fg{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
     .fc{padding:40px;background:var(--white);border:1px solid var(--border);border-radius:var(--rl);transition:all var(--tr)}.fc:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(45,37,32,0.08)}
@@ -148,8 +155,8 @@ export default function Home() {
     .modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--sand-500);transition:all var(--tr)}.modal-close:hover{border-color:var(--accent);color:var(--accent)}
     .premium-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:linear-gradient(135deg,#8b6914,#c4a24e);color:white;border-radius:100px;font-size:0.75rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:20px}
     .premium-feat{display:flex;align-items:center;gap:10px;padding:10px 0;font-size:0.92rem;color:var(--sand-700)}.premium-feat svg{color:var(--accent);flex-shrink:0}
-    @media(max-width:900px){.steps{grid-template-columns:1fr}.pg{grid-template-columns:repeat(2,1fr)}.fg{grid-template-columns:1fr}.nl{display:none}}
-    @media(max-width:600px){.pg{grid-template-columns:1fr;gap:16px}.hero{padding:100px 16px 60px}h1{font-size:2.4rem!important}.sb{padding:6px 6px 6px 18px}.sbtn{padding:12px 20px}.sbtn .bt{display:none}.lb .ll{display:none}.lb{padding:7px 10px}}
+    @media(max-width:900px){.steps{grid-template-columns:1fr}.pg{grid-template-columns:repeat(2,1fr);gap:16px}.fg{grid-template-columns:1fr}.nl{display:none}}
+    @media(max-width:600px){.pg{grid-template-columns:repeat(2,1fr);gap:12px}.hero{padding:100px 16px 60px}h1{font-size:2.4rem!important}.sb{padding:6px 6px 6px 18px}.sbtn{padding:12px 20px}.sbtn .bt{display:none}.lb .ll{display:none}.lb{padding:7px 10px}.pinfo{padding:12px 14px 14px}.pname{font-size:0.9rem}.pprice{font-size:0.95rem}.ps{font-size:0.62rem;padding:4px 8px}.pdiscount{font-size:0.62rem;padding:4px 8px}}
   `;
 
   const Check = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>;
@@ -237,26 +244,37 @@ export default function Home() {
                   <button className="rsort">{i('results_sort')} ↓</button>
                 </div>
                 <div className="pg">
-                  {results.products.map(p=>(
+                  {results.products.map(p=>{
+                    const discount = p.originalPrice ? Math.round((1 - p.price/p.originalPrice)*100) : 0;
+                    return (
                     <a key={p.id} className="pc" href={p.affiliateUrl || p.storeUrl} target="_blank" rel="noopener noreferrer">
                       <div className="pi">
                         {p.image ? (
                           <img src={p.image} alt={p.name} className="pimg" loading="lazy" />
                         ) : (
-                          <svg width="48" height="48" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.3"><path d="M20 12h24l4 8-6 4v28H22V24l-6-4 4-8z"/></svg>
+                          <svg width="48" height="48" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.25"><path d="M20 12h24l4 8-6 4v28H22V24l-6-4 4-8z"/></svg>
                         )}
                         <span className="ps">{p.store}</span>
+                        {discount > 0 && <span className="pdiscount">-{discount}%</span>}
+                        <div className="pvisit">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                          {i('visit_store') || 'Visit store'}
+                        </div>
                       </div>
                       <div className="pinfo">
                         <div className="pbrand">{p.brand}</div>
                         <div className="pname">{p.name}</div>
                         <div className="pmeta">
-                          <div className="pprice">{p.currency}{p.price.toFixed(2)}{p.originalPrice && <span className="orig">{p.currency}{p.originalPrice.toFixed(2)}</span>}</div>
+                          <div className="pprice">
+                            {p.currency}{p.price.toFixed(2)}
+                            {p.originalPrice && <span className="orig">{p.currency}{p.originalPrice.toFixed(2)}</span>}
+                            {discount > 0 && <span className="save">{i('save') || 'Save'} {p.currency}{(p.originalPrice - p.price).toFixed(2)}</span>}
+                          </div>
                           {p.colors && <div className="pcolors">{p.colors.map((c,ci)=><div key={ci} className="cdot" style={{background:c}}/>)}</div>}
                         </div>
                       </div>
                     </a>
-                  ))}
+                  );})}
                 </div>
                 <div className="aff">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{color:'var(--accent)',flexShrink:0}}><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
