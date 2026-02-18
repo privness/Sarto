@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import { LANGUAGES, T, detectLanguage, t } from '../lib/i18n';
+import { LANGUAGES, T, detectLanguage, t, saveLanguage } from '../lib/i18n';
 
 export default function Home() {
   const [lang, setLang] = useState('en');
@@ -33,9 +33,37 @@ export default function Home() {
   const i = (key) => t(lang, key);
   const langObj = LANGUAGES.find(l => l.code === lang) || LANGUAGES[0];
 
+  // Rate limiting helpers
+  function getRateLimit(key, maxPerDay) {
+    try {
+      const data = JSON.parse(localStorage.getItem(`sarto-rl-${key}`) || '{}');
+      const today = new Date().toDateString();
+      if (data.date !== today) return { count: 0, date: today };
+      return data;
+    } catch { return { count: 0, date: new Date().toDateString() }; }
+  }
+  function incrementRate(key) {
+    const today = new Date().toDateString();
+    const data = getRateLimit(key);
+    const updated = { count: (data.date === today ? data.count : 0) + 1, date: today };
+    localStorage.setItem(`sarto-rl-${key}`, JSON.stringify(updated));
+    return updated.count;
+  }
+  function isRateLimited(key, max) {
+    const data = getRateLimit(key);
+    return data.count >= max;
+  }
+
+  const SEARCH_LIMIT = 20;
+
   async function doSearch(q) {
     if (!q.trim()) return;
+    if (isRateLimited('search', SEARCH_LIMIT)) {
+      setPremiumOpen(true);
+      return;
+    }
     setLoading(true);
+    incrementRate('search');
     try {
       const res = await fetch('/api/search', {
         method: 'POST',
@@ -180,8 +208,8 @@ export default function Home() {
     .ld-spinner{display:inline-block;width:20px;height:20px;border:2px solid var(--sand-300);border-top-color:var(--accent);border-radius:50%;animation:spin 0.6s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
     .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:24px}
-    .modal{background:var(--white);border-radius:var(--rl);max-width:440px;width:100%;padding:48px 40px;position:relative;box-shadow:0 20px 60px rgba(45,37,32,0.2)}
-    .modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--sand-500);transition:all var(--tr)}.modal-close:hover{border-color:var(--accent);color:var(--accent)}
+    .modal{background:var(--white);border-radius:var(--rl);max-width:440px;width:100%;padding:40px 36px 36px;position:relative;box-shadow:0 20px 60px rgba(45,37,32,0.2);max-height:90vh;overflow-y:auto}
+    .modal-close{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--sand-700);transition:all var(--tr);z-index:10;font-size:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,0.08)}.modal-close:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-glow);transform:scale(1.05)}
     .premium-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:linear-gradient(135deg,#8b6914,#c4a24e);color:white;border-radius:100px;font-size:0.75rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:20px}
     .premium-feat{display:flex;align-items:center;gap:10px;padding:10px 0;font-size:0.92rem;color:var(--sand-700)}.premium-feat svg{color:var(--accent);flex-shrink:0}
     @media(max-width:900px){.steps{grid-template-columns:1fr}.pg{grid-template-columns:repeat(2,1fr);gap:16px}.fg{grid-template-columns:1fr}.nl{display:none}}
@@ -215,7 +243,7 @@ export default function Home() {
             </button>
             <div className="ld">
               {LANGUAGES.map(l=>(
-                <button key={l.code} className={`lo${l.code===lang?' ac':''}`} onClick={()=>{setLang(l.code);setLangOpen(false)}}>
+                <button key={l.code} className={`lo${l.code===lang?' ac':''}`} onClick={()=>{setLang(l.code);saveLanguage(l.code);setLangOpen(false)}}>
                   <span className="f">{l.flag}</span>
                   <span>{l.name}</span>
                   <span className="nt">{l.native}</span>
