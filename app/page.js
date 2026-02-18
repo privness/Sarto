@@ -444,11 +444,11 @@ export default function Home() {
         <div className="fti">
           <span className="logo" style={{fontSize:'1.4rem'}}>SART<b>O</b></span>
           <div className="ftl">
-            <a href="#">{i('footer_about')}</a>
-            <a href="#">{i('footer_how')}</a>
-            <a href="#">{i('footer_privacy')}</a>
-            <a href="#">{i('footer_terms')}</a>
-            <a href="#">{i('footer_contact')}</a>
+            <a href="#how">{i('footer_about')}</a>
+            <a href="#how">{i('footer_how')}</a>
+            <a href="#" onClick={e=>{e.preventDefault();setPremiumOpen(true)}}>{i('footer_privacy')}</a>
+            <a href="#" onClick={e=>{e.preventDefault();setPremiumOpen(true)}}>{i('footer_terms')}</a>
+            <a href="mailto:hello@sartoapp.com">{i('footer_contact')}</a>
           </div>
           <div className="ftc">{i('footer_copy')}</div>
         </div>
