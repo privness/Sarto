@@ -138,6 +138,35 @@ export default function Home() {
     .fc{padding:40px;background:var(--white);border:1px solid var(--border);border-radius:var(--rl);transition:all var(--tr)}.fc:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(45,37,32,0.08)}
     .fi{width:48px;height:48px;background:var(--accent-glow);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--accent)}
     .fc h3{font-family:var(--serif);font-size:1.3rem;font-weight:500;margin-bottom:10px}.fc p{font-size:0.9rem;color:var(--sand-700);line-height:1.7;font-weight:300}
+    .sastre-section{padding:100px 24px;background:var(--sand-950);position:relative;overflow:hidden}
+    .sastre-section::before{content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(196,162,78,0.08) 0%,transparent 70%);pointer-events:none}
+    .sastre-section::after{content:'';position:absolute;bottom:-20%;left:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(196,162,78,0.05) 0%,transparent 70%);pointer-events:none}
+    .sastre-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
+    .sastre-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:linear-gradient(135deg,rgba(139,105,20,0.2),rgba(196,162,78,0.2));border:1px solid rgba(196,162,78,0.3);color:var(--accent-light);border-radius:100px;font-size:0.75rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:20px}
+    .sastre-title{font-family:var(--serif);font-size:clamp(2rem,3.5vw,2.8rem);font-weight:300;color:var(--sand-100);margin-bottom:16px;line-height:1.2}.sastre-title em{font-style:italic;color:var(--accent-light);font-weight:400}
+    .sastre-desc{font-size:1rem;color:var(--sand-400);line-height:1.7;margin-bottom:32px;font-weight:300}
+    .sastre-features{display:flex;flex-direction:column;gap:16px;margin-bottom:32px}
+    .sastre-feat{display:flex;gap:14px;align-items:flex-start}
+    .sastre-feat-icon{width:40px;height:40px;background:rgba(196,162,78,0.1);border:1px solid rgba(196,162,78,0.2);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--accent-light);flex-shrink:0}
+    .sastre-feat strong{display:block;font-size:0.9rem;color:var(--sand-100);margin-bottom:2px}
+    .sastre-feat span{font-size:0.82rem;color:var(--sand-500);line-height:1.5}
+    .sastre-cta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+    .sastre-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;background:var(--accent);color:var(--white);border:none;border-radius:100px;font-family:var(--sans);font-size:0.95rem;font-weight:500;cursor:pointer;transition:all var(--tr)}.sastre-btn:hover{background:var(--accent-light);transform:translateY(-2px);box-shadow:0 8px 30px rgba(139,105,20,0.3)}
+    .sastre-price{font-size:0.82rem;color:var(--sand-500)}
+    .sastre-preview{position:relative}
+    .sastre-chat-window{background:var(--sand-900);border:1px solid rgba(196,162,78,0.15);border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+    .sastre-chat-header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid rgba(196,162,78,0.1);background:rgba(196,162,78,0.05)}
+    .sastre-chat-avatar{width:40px;height:40px;border-radius:12px;background:var(--sand-950);display:flex;align-items:center;justify-content:center}
+    .sastre-chat-header strong{display:block;font-size:0.9rem;color:var(--sand-100)}
+    .sastre-chat-header span{font-size:0.72rem;color:var(--accent-light)}
+    .sastre-chat-body{padding:20px;display:flex;flex-direction:column;gap:12px;min-height:220px}
+    .sastre-msg{max-width:85%;padding:12px 16px;border-radius:16px;font-size:0.85rem;line-height:1.5}
+    .sastre-msg p{margin:0}
+    .sastre-msg-bot{background:rgba(196,162,78,0.1);color:var(--sand-200);border-bottom-left-radius:4px;align-self:flex-start}
+    .sastre-msg-user{background:var(--accent);color:var(--white);border-bottom-right-radius:4px;align-self:flex-end}
+    .sastre-chat-input{padding:14px 20px;border-top:1px solid rgba(196,162,78,0.1);display:flex;align-items:center}
+    .sastre-chat-input span{font-size:0.82rem;color:var(--sand-600)}
+    @media(max-width:900px){.sastre-inner{grid-template-columns:1fr;gap:40px}.sastre-preview{order:-1}}
     .cta{padding:120px 24px;text-align:center;background:var(--sand-950);color:var(--sand-100);position:relative;overflow:hidden}
     .cta::before{content:'';position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(196,162,78,0.1) 0%,transparent 70%);pointer-events:none}
     .cta h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3.5rem);font-weight:300;margin-bottom:20px;position:relative}.cta h2 em{font-style:italic;color:var(--accent-light);font-weight:400}
@@ -308,6 +337,69 @@ export default function Home() {
           <div className="fc"><div className="fi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><h3>{i('f2t')}</h3><p>{i('f2d')}</p></div>
           <div className="fc"><div className="fi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div><h3>{i('f3t')}</h3><p>{i('f3d')}</p></div>
           <div className="fc"><div className="fi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div><h3>{i('f4t')}</h3><p>{i('f4d')}</p></div>
+        </div>
+      </section>
+
+      {/* EL SASTRE - AI STYLIST */}
+      <section className="sastre-section" id="sastre">
+        <div className="sastre-inner">
+          <div className="sastre-content">
+            <div className="sastre-badge">✦ {i('sastre_badge')}</div>
+            <h2 className="sastre-title">{i('sastre_title_1')}<em>{i('sastre_title_em')}</em></h2>
+            <p className="sastre-desc">{i('sastre_desc')}</p>
+            <div className="sastre-features">
+              <div className="sastre-feat">
+                <div className="sastre-feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+                <div><strong>{i('sastre_f1t')}</strong><span>{i('sastre_f1d')}</span></div>
+              </div>
+              <div className="sastre-feat">
+                <div className="sastre-feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></div>
+                <div><strong>{i('sastre_f2t')}</strong><span>{i('sastre_f2d')}</span></div>
+              </div>
+              <div className="sastre-feat">
+                <div className="sastre-feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+                <div><strong>{i('sastre_f3t')}</strong><span>{i('sastre_f3d')}</span></div>
+              </div>
+              <div className="sastre-feat">
+                <div className="sastre-feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+                <div><strong>{i('sastre_f4t')}</strong><span>{i('sastre_f4d')}</span></div>
+              </div>
+            </div>
+            <div className="sastre-cta-row">
+              <button className="sastre-btn" onClick={()=>setPremiumOpen(true)}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                {i('sastre_btn')}
+              </button>
+              <span className="sastre-price">{i('sastre_included')}</span>
+            </div>
+          </div>
+          <div className="sastre-preview">
+            <div className="sastre-chat-window">
+              <div className="sastre-chat-header">
+                <div className="sastre-chat-avatar">
+                  <svg width="24" height="24" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#2d2520"/><circle cx="32" cy="22" r="8" stroke="#c4a24e" strokeWidth="2" fill="none"/><path d="M32 30v12M26 36h12" stroke="#c4a24e" strokeWidth="2"/><rect x="22" y="44" width="20" height="4" rx="2" fill="#c4a24e" opacity="0.5"/></svg>
+                </div>
+                <div>
+                  <strong>El Sastre</strong>
+                  <span>{i('sastre_status')}</span>
+                </div>
+              </div>
+              <div className="sastre-chat-body">
+                <div className="sastre-msg sastre-msg-bot">
+                  <p>{i('sastre_demo_1')}</p>
+                </div>
+                <div className="sastre-msg sastre-msg-user">
+                  <p>{i('sastre_demo_2')}</p>
+                </div>
+                <div className="sastre-msg sastre-msg-bot">
+                  <p>{i('sastre_demo_3')}</p>
+                </div>
+              </div>
+              <div className="sastre-chat-input">
+                <span>{i('sastre_placeholder')}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
