@@ -1,30 +1,31 @@
-import Stripe from 'stripe';
-
 export async function POST(request) {
-  // If Stripe is not configured, return a message
   if (!process.env.STRIPE_SECRET_KEY) {
     return Response.json({
-      error: 'Stripe not configured yet. Add STRIPE_SECRET_KEY to environment variables.',
+      error: 'Stripe not configured yet.',
       demo: true
     }, { status: 200 });
   }
 
   try {
+    const { default: Stripe } = await import('stripe');
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const { lang = 'en' } = await request.json();
+
+    const baseUrl = 'https://sartoapp.com';
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [{
-        price: process.env.STRIPE_PRICE_PREMIUM, // Create this in Stripe dashboard: 9.99€/month
+        price: process.env.STRIPE_PRICE_PREMIUM,
         quantity: 1,
       }],
       mode: 'subscription',
-      success_url: `${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/success?plan=premium&lang=${lang}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}?lang=${lang}`,
+      success_url: `${baseUrl}/success?plan=premium&lang=${lang}`,
+      cancel_url: `${baseUrl}?lang=${lang}`,
       subscription_data: {
-        trial_period_days: 7, // 7-day free trial
+        trial_period_days: 7,
       },
+      allow_promotion_codes: true,
     });
 
     return Response.json({ url: session.url });
