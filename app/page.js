@@ -203,6 +203,7 @@ export default function Home() {
           <div className="nl">
             <a href="#how">{i('nav_how')}</a>
             <a href="#features">{i('nav_features')}</a>
+            <a href="#sastre" style={{display:'flex',alignItems:'center',gap:5}}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>{i('nav_sastre')}</a>
             <a href="#" onClick={e=>{e.preventDefault();setPremiumOpen(true)}} style={{color:'var(--accent)',fontWeight:600}}>{i('nav_premium')} ✦</a>
             <a href="#" className="ncta" onClick={e=>{e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});setTimeout(()=>searchRef.current?.focus(),500)}}>{i('nav_cta')}</a>
           </div>
@@ -434,8 +435,15 @@ export default function Home() {
             <h2 style={{fontFamily:'var(--serif)',fontSize:'2rem',fontWeight:300,marginBottom:8}}>{i('premium_title')}</h2>
             <p style={{color:'var(--sand-700)',marginBottom:24,fontSize:'0.95rem'}}>{i('premium_desc')}</p>
             <div style={{fontSize:'2.5rem',fontWeight:700,color:'var(--sand-900)',marginBottom:4}}>€{i('premium_price')}<span style={{fontSize:'1rem',fontWeight:400,color:'var(--sand-500)'}}>/mo</span></div>
-            <p style={{fontSize:'0.82rem',color:'var(--accent)',marginBottom:28}}>{i('premium_trial')}</p>
-            <div style={{borderTop:'1px solid var(--border)',paddingTop:20,marginBottom:28}}>
+            <p style={{fontSize:'0.82rem',color:'var(--accent)',marginBottom:20}}>{i('premium_trial')}</p>
+            <div style={{background:'linear-gradient(135deg,rgba(139,105,20,0.08),rgba(196,162,78,0.08))',border:'1px solid rgba(196,162,78,0.2)',borderRadius:12,padding:'16px',marginBottom:20}}>
+              <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:8}}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                <strong style={{fontSize:'0.95rem',color:'var(--sand-900)'}}>{i('premium_sastre_title')}</strong>
+              </div>
+              <p style={{fontSize:'0.82rem',color:'var(--sand-700)',lineHeight:1.5,margin:0}}>{i('premium_sastre_desc')}</p>
+            </div>
+            <div style={{borderTop:'1px solid var(--border)',paddingTop:16,marginBottom:24}}>
               <div className="premium-feat"><Check /> {i('premium_f1')}</div>
               <div className="premium-feat"><Check /> {i('premium_f2')}</div>
               <div className="premium-feat"><Check /> {i('premium_f3')}</div>
