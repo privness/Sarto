@@ -5,22 +5,3 @@
     }
   }
 }
-```
-
-5. Commit
-
-Después edita estos 3 archivos (lápiz ✏️) y cambia el import de `'../../../lib/db'` por `'@/lib/db'`:
-
-**`app/api/collections/route.js`** — primera línea cambiar:
-```
-import { getUser, getCollections, createCollection, deleteCollection, addToCollection, removeFromCollection } from '@/lib/db';
-```
-
-**`app/api/db-init/route.js`** — primera línea cambiar:
-```
-import { initDb } from '@/lib/db';
-```
-
-**`app/api/favorites/route.js`** — primera línea cambiar:
-```
-import { getUser, getFavorites, addFavorite, removeFavorite } from '@/lib/db';
