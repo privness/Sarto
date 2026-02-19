@@ -1,6 +1,5 @@
 import { getServerSession } from 'next-auth';
-import { getUser, getCollections, createCollection, deleteCollection, addToCollection, removeFromCollection } from '../../../lib/db';
-
+import { getUser, getCollections, createCollection, deleteCollection, addToCollection, removeFromCollection } from '@/lib/db';
 async function getSessionUser() {
   const session = await getServerSession();
   if (!session?.user?.email) return null;
