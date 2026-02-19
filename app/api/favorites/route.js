@@ -1,6 +1,5 @@
 import { getServerSession } from 'next-auth';
-import { getUser, getFavorites, addFavorite, removeFavorite } from '../../../lib/db';
-
+import { getUser, getFavorites, addFavorite, removeFavorite } from '@/lib/db';
 async function getSessionUser() {
   const session = await getServerSession();
   if (!session?.user?.email) return null;
