@@ -104,6 +104,7 @@ export default function Home() {
     .nl a{font-size:0.88rem;font-weight:500;color:var(--sand-700);text-decoration:none;letter-spacing:0.04em;transition:color var(--tr)}.nl a:hover{color:var(--accent)}
     .ncta{background:var(--sand-900)!important;color:var(--white)!important;padding:10px 24px!important;border-radius:100px!important;font-size:0.85rem!important}
     .ncta:hover{background:var(--accent)!important}
+    .nav-signin{display:flex;align-items:center;gap:6px;padding:10px 20px;background:var(--white);color:var(--sand-900);border:1px solid var(--border);border-radius:100px;font-size:0.85rem;font-weight:500;text-decoration:none;transition:all var(--tr)}.nav-signin:hover{border-color:var(--accent);color:var(--accent)}
     .ls{position:relative}.lb{display:flex;align-items:center;gap:8px;padding:7px 14px;background:var(--sand-100);border:1px solid var(--border);border-radius:100px;cursor:pointer;font-family:var(--sans);font-size:0.82rem;font-weight:500;color:var(--sand-700);transition:all var(--tr);white-space:nowrap;outline:none}
     .lb:hover{border-color:var(--accent-light);color:var(--accent)}.lb .f{font-size:1.1rem;line-height:1}.lb .ch{width:12px;height:12px;transition:transform var(--tr)}
     .ld{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--white);border:1px solid var(--border);border-radius:var(--rl);box-shadow:0 12px 40px rgba(45,37,32,0.12);padding:8px;min-width:200px;z-index:200;max-height:360px;overflow-y:auto}
@@ -234,6 +235,10 @@ export default function Home() {
             <a href="#sastre" style={{display:'flex',alignItems:'center',gap:5}}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>{i('nav_sastre')}</a>
             <a href="#" onClick={e=>{e.preventDefault();setPremiumOpen(true)}} style={{color:'var(--accent)',fontWeight:600}}>{i('nav_premium')} ✦</a>
             <a href="#" className="ncta" onClick={e=>{e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});setTimeout(()=>searchRef.current?.focus(),500)}}>{i('nav_cta')}</a>
+            <a href="/wardrobe" className="nav-signin">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              {i('nav_signin')}
+            </a>
           </div>
           <div ref={langRef} className={`ls${langOpen?' o':''}`}>
             <button className="lb" onClick={()=>setLangOpen(!langOpen)}>
