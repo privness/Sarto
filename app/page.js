@@ -79,37 +79,6 @@ export default function Home() {
     setLoading(false);
   }
 
-  async function handleFav(product) {
-    try {
-      const res = await fetch('/api/favorites', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'add',
-          product: {
-            id: product.id,
-            name: product.name,
-            brand: product.brand || product.store,
-            price: product.price,
-            image: product.image,
-            url: product.affiliateUrl || product.storeUrl,
-            store: product.store,
-          }
-        }),
-      });
-      if (res.status === 401) {
-        window.location.href = '/wardrobe';
-        return;
-      }
-      if (res.ok) {
-        const btn = event?.target?.closest('.pfav');
-        if (btn) btn.classList.add('faved');
-      }
-    } catch (e) {
-      window.location.href = '/wardrobe';
-    }
-  }
-
   async function handlePremium() {
     try {
       const res = await fetch('/api/checkout', {
@@ -184,7 +153,6 @@ export default function Home() {
     .ps{position:absolute;top:12px;left:12px;background:rgba(255,253,249,0.95);backdrop-filter:blur(12px);padding:5px 12px;border-radius:100px;font-size:0.7rem;font-weight:600;letter-spacing:0.08em;color:var(--sand-700);text-transform:uppercase;z-index:2}
     .pdiscount{position:absolute;top:12px;right:12px;background:linear-gradient(135deg,#8b6914,#c4a24e);padding:5px 10px;border-radius:100px;font-size:0.7rem;font-weight:700;color:white;letter-spacing:0.03em;z-index:2}
     .pvisit{position:absolute;bottom:12px;left:12px;right:12px;background:rgba(45,37,32,0.9);backdrop-filter:blur(12px);padding:10px;border-radius:10px;text-align:center;font-size:0.78rem;font-weight:500;color:var(--white);letter-spacing:0.04em;opacity:0;transform:translateY(8px);transition:all 0.3s cubic-bezier(0.4,0,0.2,1);z-index:2;display:flex;align-items:center;justify-content:center;gap:6px}
-    .pfav{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:rgba(255,253,249,0.95);backdrop-filter:blur(12px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:3;transition:all 0.2s;color:var(--sand-400)}.pfav:hover{transform:scale(1.15);color:#e05}.pfav.faved{color:#e05}
     .pinfo{padding:16px 18px 18px}
     .pbrand{font-size:0.68rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--sand-400);margin-bottom:6px}
     .pname{font-family:var(--serif);font-size:1rem;font-weight:500;margin-bottom:10px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.7em}
@@ -266,10 +234,6 @@ export default function Home() {
             <a href="#sastre" style={{display:'flex',alignItems:'center',gap:5}}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>{i('nav_sastre')}</a>
             <a href="#" onClick={e=>{e.preventDefault();setPremiumOpen(true)}} style={{color:'var(--accent)',fontWeight:600}}>{i('nav_premium')} ✦</a>
             <a href="#" className="ncta" onClick={e=>{e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});setTimeout(()=>searchRef.current?.focus(),500)}}>{i('nav_cta')}</a>
-            <a href="/wardrobe" style={{display:'flex',alignItems:'center',gap:5,padding:'8px 16px',background:'var(--sand-900)',color:'var(--white)',borderRadius:100,fontSize:'0.85rem',fontWeight:500,textDecoration:'none'}}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-              {i('nav_wardrobe')}
-            </a>
           </div>
           <div ref={langRef} className={`ls${langOpen?' o':''}`}>
             <button className="lb" onClick={()=>setLangOpen(!langOpen)}>
@@ -350,9 +314,6 @@ export default function Home() {
                         )}
                         <span className="ps">{p.store}</span>
                         {discount > 0 && <span className="pdiscount">-{discount}%</span>}
-                        <button className="pfav" onClick={e=>{e.preventDefault();e.stopPropagation();handleFav(p)}} title={i('save')}>
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-                        </button>
                         <div className="pvisit">
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                           {i('visit_store') || 'Visit store'}
