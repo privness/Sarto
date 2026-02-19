@@ -1,5 +1,4 @@
-import { initDb } from '../../../lib/db';
-
+import { initDb } from '@/lib/db';
 export async function GET() {
   try {
     await initDb();
