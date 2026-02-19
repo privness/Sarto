@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
-import { getOrCreateUser } from '../../../../lib/db';
+import { getOrCreateUser } from '@/lib/db';
 
 const handler = NextAuth({
   providers: [
@@ -22,7 +22,7 @@ const handler = NextAuth({
     async session({ session }) {
       if (session?.user?.email) {
         try {
-          const { getUser } = await import('../../../../lib/db');
+          const { getUser } = await import('@/lib/db');
           const dbUser = await getUser(session.user.email);
           if (dbUser) {
             session.user.id = dbUser.id;
