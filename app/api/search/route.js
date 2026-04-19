@@ -1,3 +1,4 @@
+export const maxDuration = 60;
 import { searchProducts } from '../../../lib/products';
 import Anthropic from '@anthropic-ai/sdk';
 
