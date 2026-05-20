@@ -13,6 +13,8 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [premiumOpen, setPremiumOpen] = useState(false);
   const [favIds, setFavIds] = useState(new Set());
+  const [sortMode, setSortMode] = useState('relevance');
+  const [sortOpen, setSortOpen] = useState(false);
   const searchRef = useRef(null);
   const resultsRef = useRef(null);
   const langRef = useRef(null);
@@ -177,7 +179,8 @@ export default function Home() {
     .results-section{padding:80px 24px 120px;background:var(--sand-100);border-top:1px solid var(--border)}
     .ri{max-width:1200px;margin:0 auto}
     .rh{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
-    .rc{font-size:0.88rem;color:var(--sand-500)}.rsort{font-family:var(--sans);font-size:0.85rem;color:var(--sand-700);background:var(--white);border:1px solid var(--border);padding:8px 16px;border-radius:100px;cursor:pointer}
+    .rc{font-size:0.88rem;color:var(--sand-500)}.rsort-wrap{position:relative}.rsort{font-family:var(--sans);font-size:0.85rem;color:var(--sand-700);background:var(--white);border:1px solid var(--border);padding:8px 16px;border-radius:100px;cursor:pointer;transition:all var(--tr)}.rsort:hover{border-color:var(--accent)}
+    .rsort-dd{position:absolute;top:calc(100% + 6px);right:0;background:var(--white);border:1px solid var(--border);border-radius:var(--rl);box-shadow:0 8px 24px rgba(45,37,32,0.12);padding:6px;min-width:180px;z-index:50}.rsort-opt{display:block;width:100%;text-align:left;padding:10px 14px;font-family:var(--sans);font-size:0.85rem;color:var(--sand-700);background:none;border:none;border-radius:var(--r);cursor:pointer;transition:all var(--tr)}.rsort-opt:hover{background:var(--sand-100);color:var(--accent)}.rsort-opt.active{color:var(--accent);font-weight:600;background:var(--accent-glow)}
     .pg{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
     .pc{background:var(--white);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);cursor:pointer;text-decoration:none;color:inherit;position:relative}
     .pc:hover{transform:translateY(-8px);box-shadow:0 24px 64px rgba(45,37,32,0.18);border-color:var(--accent-light)}
@@ -255,6 +258,16 @@ export default function Home() {
   const Check = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>;
   const Star = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 3l1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5L12 3z"/></svg>;
   const Search = ({s=20}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>;
+
+  function getSortedProducts(products) {
+    if (!products) return [];
+    const sorted = [...products];
+    if (sortMode === 'price_asc') sorted.sort((a, b) => a.price - b.price);
+    else if (sortMode === 'price_desc') sorted.sort((a, b) => b.price - a.price);
+    return sorted;
+  }
+
+  const sortLabels = { relevance: 'Relevancia', price_asc: 'Precio ↑', price_desc: 'Precio ↓' };
 
   return (
     <>
@@ -346,10 +359,17 @@ export default function Home() {
               <>
                 <div className="rh">
                   <span className="rc">{i('results_count').replace('{n}',results.total).replace('{s}',results.stores)} {results.aiParsed ? '✦ AI' : ''}</span>
-                  <button className="rsort">{i('results_sort')} ↓</button>
+                  <div className="rsort-wrap">
+                    <button className="rsort" onClick={()=>setSortOpen(!sortOpen)}>{sortLabels[sortMode]} ↓</button>
+                    {sortOpen && <div className="rsort-dd">
+                      {Object.entries(sortLabels).map(([key, label]) => (
+                        <button key={key} className={`rsort-opt${sortMode === key ? ' active' : ''}`} onClick={()=>{setSortMode(key);setSortOpen(false)}}>{label}</button>
+                      ))}
+                    </div>}
+                  </div>
                 </div>
                 <div className="pg">
-                  {results.products.map(p=>{
+                  {getSortedProducts(results.products).map(p=>{
                     const discount = p.originalPrice ? Math.round((1 - p.price/p.originalPrice)*100) : 0;
                     return (
                     <div key={p.id} className="pc" onClick={()=>window.open(p.affiliateUrl || p.storeUrl, '_blank')}>
