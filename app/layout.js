@@ -1,4 +1,5 @@
 import './globals.css';
+import Providers from './providers';
 
 export const metadata = {
   title: 'Sarto — AI-Powered Fashion Search Engine',
@@ -40,7 +41,7 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
       </head>
-      <body>{children}</body>
+      <body><Providers>{children}</Providers></body>
     </html>
   );
 }
