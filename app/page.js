@@ -342,7 +342,7 @@ export default function Home() {
                   {results.products.map(p=>{
                     const discount = p.originalPrice ? Math.round((1 - p.price/p.originalPrice)*100) : 0;
                     return (
-                    <a key={p.id} className="pc" href={p.affiliateUrl || p.storeUrl} target="_blank" rel="noopener noreferrer">
+                    <div key={p.id} className="pc" onClick={()=>window.open(p.affiliateUrl || p.storeUrl, '_blank')}>
                       <div className="pi">
                         {p.image ? (
                           <img src={p.image} alt={p.name} className="pimg" loading="lazy" />
@@ -371,7 +371,7 @@ export default function Home() {
                           {p.colors && <div className="pcolors">{p.colors.map((c,ci)=><div key={ci} className="cdot" style={{background:c}}/>)}</div>}
                         </div>
                       </div>
-                    </a>
+                    </div>
                   );})}
                 </div>
                 <div className="aff">
