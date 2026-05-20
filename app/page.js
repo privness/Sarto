@@ -10,6 +10,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [premiumOpen, setPremiumOpen] = useState(false);
+  const [favIds, setFavIds] = useState(new Set());
   const searchRef = useRef(null);
   const resultsRef = useRef(null);
   const langRef = useRef(null);
@@ -77,6 +78,36 @@ export default function Home() {
       console.error('Search error', e);
     }
     setLoading(false);
+  }
+
+  async function handleFav(e, product) {
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      const res = await fetch('/api/favorites', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: favIds.has(product.id) ? 'remove' : 'add',
+          product: { id: product.id, name: product.name, brand: product.brand, price: product.price, image: product.image, url: product.affiliateUrl || product.storeUrl, store: product.store },
+          productId: product.id,
+        }),
+      });
+      if (res.status === 401) {
+        window.location.href = '/wardrobe';
+        return;
+      }
+      if (res.ok) {
+        setFavIds(prev => {
+          const next = new Set(prev);
+          if (next.has(product.id)) next.delete(product.id);
+          else next.add(product.id);
+          return next;
+        });
+      }
+    } catch {
+      window.location.href = '/wardrobe';
+    }
   }
 
   async function handlePremium() {
@@ -153,6 +184,7 @@ export default function Home() {
     .pimg{width:100%;height:100%;object-fit:contain;object-position:center;transition:transform 0.5s cubic-bezier(0.4,0,0.2,1)}
     .ps{position:absolute;top:12px;left:12px;background:rgba(255,253,249,0.95);backdrop-filter:blur(12px);padding:5px 12px;border-radius:100px;font-size:0.7rem;font-weight:600;letter-spacing:0.08em;color:var(--sand-700);text-transform:uppercase;z-index:2}
     .pdiscount{position:absolute;top:12px;right:12px;background:linear-gradient(135deg,#8b6914,#c4a24e);padding:5px 10px;border-radius:100px;font-size:0.7rem;font-weight:700;color:white;letter-spacing:0.03em;z-index:2}
+    .pfav{position:absolute;top:12px;left:12px;width:36px;height:36px;border-radius:50%;background:rgba(255,253,249,0.9);backdrop-filter:blur(8px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:3;transition:all 0.2s;color:var(--sand-400);padding:0}.pfav:hover{transform:scale(1.15);color:#e05}.pfav.faved{color:#e05}
     .pvisit{position:absolute;bottom:12px;left:12px;right:12px;background:rgba(45,37,32,0.9);backdrop-filter:blur(12px);padding:10px;border-radius:10px;text-align:center;font-size:0.78rem;font-weight:500;color:var(--white);letter-spacing:0.04em;opacity:0;transform:translateY(8px);transition:all 0.3s cubic-bezier(0.4,0,0.2,1);z-index:2;display:flex;align-items:center;justify-content:center;gap:6px}
     .pinfo{padding:16px 18px 18px}
     .pbrand{font-size:0.68rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--sand-400);margin-bottom:6px}
@@ -319,6 +351,9 @@ export default function Home() {
                         )}
                         <span className="ps">{p.store}</span>
                         {discount > 0 && <span className="pdiscount">-{discount}%</span>}
+                        <button className={`pfav${favIds.has(p.id) ? ' faved' : ''}`} onClick={e=>handleFav(e,p)} title={i('save') || 'Save'}>
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill={favIds.has(p.id) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                        </button>
                         <div className="pvisit">
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                           {i('visit_store') || 'Visit store'}
